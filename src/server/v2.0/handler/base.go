@@ -136,14 +136,18 @@ func (b *BaseAPI) RequireAuthenticated(ctx context.Context) error {
 }
 
 // BuildQuery builds the query model according to the query string
-func (b *BaseAPI) BuildQuery(ctx context.Context, query *string, pageNumber, pageSize *int64) (*q.Query, error) {
+func (b *BaseAPI) BuildQuery(ctx context.Context, query, sort *string, pageNumber, pageSize *int64) (*q.Query, error) {
 	var (
 		qs string
+		st string
 		pn int64
 		ps int64
 	)
 	if query != nil {
 		qs = *query
+	}
+	if sort != nil {
+		st = *sort
 	}
 	if pageNumber != nil {
 		pn = *pageNumber
@@ -151,7 +155,8 @@ func (b *BaseAPI) BuildQuery(ctx context.Context, query *string, pageNumber, pag
 	if pageSize != nil {
 		ps = *pageSize
 	}
-	return q.Build(qs, pn, ps)
+
+	return q.Build(qs, st, pn, ps)
 }
 
 // Links return Links based on the provided pagination information

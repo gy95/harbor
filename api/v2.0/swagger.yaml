@@ -30,6 +30,7 @@ paths:
         - $ref: '#/parameters/requestId'
         - $ref: '#/parameters/page'
         - $ref: '#/parameters/pageSize'
+        - $ref: '#/parameters/sort'
         - name: name
           in: query
           description: The name of project.
@@ -249,6 +250,7 @@ paths:
         - $ref: '#/parameters/requestId'
         - $ref: '#/parameters/projectName'
         - $ref: '#/parameters/query'
+        - $ref: '#/parameters/sort'
         - $ref: '#/parameters/page'
         - $ref: '#/parameters/pageSize'
       responses:
@@ -365,6 +367,7 @@ paths:
         - $ref: '#/parameters/projectName'
         - $ref: '#/parameters/repositoryName'
         - $ref: '#/parameters/query'
+        - $ref: '#/parameters/sort'
         - $ref: '#/parameters/page'
         - $ref: '#/parameters/pageSize'
         - $ref: '#/parameters/acceptVulnerabilities'
@@ -639,6 +642,7 @@ paths:
         - $ref: '#/parameters/repositoryName'
         - $ref: '#/parameters/reference'
         - $ref: '#/parameters/query'
+        - $ref: '#/parameters/sort'
         - $ref: '#/parameters/page'
         - $ref: '#/parameters/pageSize'
         - name: with_signature
@@ -845,6 +849,7 @@ paths:
       parameters:
         - $ref: '#/parameters/requestId'
         - $ref: '#/parameters/query'
+        - $ref: '#/parameters/sort'
         - $ref: '#/parameters/page'
         - $ref: '#/parameters/pageSize'
       responses:
@@ -878,6 +883,7 @@ paths:
         - $ref: '#/parameters/projectName'
         - $ref: '#/parameters/requestId'
         - $ref: '#/parameters/query'
+        - $ref: '#/parameters/sort'
         - $ref: '#/parameters/page'
         - $ref: '#/parameters/pageSize'
       responses:
@@ -965,6 +971,7 @@ paths:
         - $ref: '#/parameters/page'
         - $ref: '#/parameters/pageSize'
         - $ref: '#/parameters/query'
+        - $ref: '#/parameters/sort'
       responses:
         '200':
           description: Success
@@ -1132,6 +1139,7 @@ paths:
         - $ref: '#/parameters/page'
         - $ref: '#/parameters/pageSize'
         - $ref: '#/parameters/query'
+        - $ref: '#/parameters/sort'
       responses:
         '200':
           description: List preheat policies success
@@ -1277,6 +1285,7 @@ paths:
         - $ref: '#/parameters/page'
         - $ref: '#/parameters/pageSize'
         - $ref: '#/parameters/query'
+        - $ref: '#/parameters/sort'
       responses:
         '200':
           description: List executions success
@@ -1373,6 +1382,7 @@ paths:
         - $ref: '#/parameters/page'
         - $ref: '#/parameters/pageSize'
         - $ref: '#/parameters/query'
+        - $ref: '#/parameters/sort'
       responses:
         '200':
           description: List tasks success
@@ -1469,6 +1479,7 @@ paths:
         - $ref: '#/parameters/page'
         - $ref: '#/parameters/pageSize'
         - $ref: '#/parameters/query'
+        - $ref: '#/parameters/sort'
       tags:
         - robotv1
       operationId: ListRobotV1
@@ -1642,6 +1653,7 @@ paths:
       parameters:
         - $ref: '#/parameters/requestId'
         - $ref: '#/parameters/query'
+        - $ref: '#/parameters/sort'
         - $ref: '#/parameters/page'
         - $ref: '#/parameters/pageSize'
       responses:
@@ -1813,6 +1825,7 @@ paths:
         - replication
       operationId: listReplicationExecutions
       parameters:
+        - $ref: '#/parameters/sort'
         - $ref: '#/parameters/page'
         - $ref: '#/parameters/pageSize'
         - name: policy_id
@@ -1933,6 +1946,7 @@ paths:
         - replication
       operationId: listReplicationTasks
       parameters:
+        - $ref: '#/parameters/sort'
         - $ref: '#/parameters/page'
         - $ref: '#/parameters/pageSize'
         - name: id
@@ -2116,6 +2130,7 @@ paths:
       operationId: getGCHistory
       parameters:
         - $ref: '#/parameters/query'
+        - $ref: '#/parameters/sort'
         - $ref: '#/parameters/page'
         - $ref: '#/parameters/pageSize'
       responses:
@@ -2663,6 +2678,29 @@ parameters:
     in: query
     type: string
     required: false
+  sort:
+    name: sort
+    description: Sort the resource list in ascending or descending order. e.g. sort by field1 in ascending orderr and field2 in descending order with "sort=field1,-field2"
+    in: query
+    type: string
+    required: false
+  page:
+    name: page
+    in: query
+    type: integer
+    format: int64
+    required: false
+    description: The page number
+    default: 1
+  pageSize:
+    name: page_size
+    in: query
+    type: integer
+    format: int64
+    required: false
+    description: The size of per page
+    default: 10
+    maximum: 100
   requestId:
     name: X-Request-Id
     description: An unique ID for the request
@@ -2728,23 +2766,6 @@ parameters:
     description: The name of the tag
     required: true
     type: string
-  page:
-    name: page
-    in: query
-    type: integer
-    format: int64
-    required: false
-    description: The page number
-    default: 1
-  pageSize:
-    name: page_size
-    in: query
-    type: integer
-    format: int64
-    required: false
-    description: The size of per page
-    default: 10
-    maximum: 100
   instanceName:
     name: preheat_instance_name
     in: path
