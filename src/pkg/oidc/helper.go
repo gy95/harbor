@@ -130,6 +130,7 @@ type UserInfo struct {
 	Subject          string   `json:"sub"`
 	Username         string   `json:"name"`
 	Email            string   `json:"email"`
+	Phone            string   `json:"phone"`
 	Groups           []string `json:"groups"`
 	AdminGroupMember bool     `json:"admin_group_member"`
 	hasGroupClaim    bool
@@ -269,6 +270,12 @@ func UserInfoFromToken(ctx context.Context, token *Token) (*UserInfo, error) {
 	if err != nil {
 		log.Warningf("Failed to get userInfo by calling remote userinfo endpoint, error: %v ", err)
 	}
+
+	log.Debugf("Remote User info is %v", remote)
+	if remote.Email == "" && remote.Phone != "" {
+		remote.Email = remote.Phone + "@atomhub.org"
+	}
+
 	if remote != nil && local != nil {
 		if remote.Subject != local.Subject {
 			return nil, fmt.Errorf("the subject from userinfo: %s does not match the subject from ID token: %s, probably a security attack happened", remote.Subject, local.Subject)
